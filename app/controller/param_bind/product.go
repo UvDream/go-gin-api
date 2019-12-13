@@ -7,9 +7,8 @@ import (
 	"gopkg.in/go-playground/validator.v8"
 )
 
-// ProductAdd 接受参数
 type ProductAdd struct {
-	Name string `form:"name" json:"name" binding:"required"`
+	Name string `form:"name" json:"name" binding:"required,NameValid"`
 }
 
 func init() {
