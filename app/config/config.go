@@ -1,3 +1,11 @@
+/*
+ * @Author: wangzhongjie
+ * @Date: 2019-12-13 09:10:41
+ * @LastEditors: wangzhongjie
+ * @LastEditTime: 2019-12-13 09:43:42
+ * @Description:配置文件
+ * @Email: UvDream@163.com
+ */
 package config
 
 const (
