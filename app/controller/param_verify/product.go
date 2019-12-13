@@ -1,20 +1,14 @@
 package paramverify
 
 import (
-	"reflect"
-
-	"gopkg.in/go-playground/validator.v8"
+	"gopkg.in/go-playground/validator.v9"
 )
 
-// NameValid 自定义验证器
-func NameValid(
-	v *validator.Validate, topStruct reflect.Value, currentStructOrField reflect.Value,
-	field reflect.Value, fieldType reflect.Type, fieldKind reflect.Kind, param string,
-) bool {
-	if s, ok := field.Interface().(string); ok {
-		if s == "admin" {
-			return true
-		}
+// NameValid 校验
+func NameValid(fl validator.FieldLevel) bool {
+	val := fl.Field().String()
+	if val == "admin" {
+		return true
 	}
 	return false
 }
