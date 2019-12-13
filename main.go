@@ -11,11 +11,10 @@ import (
 
 func main() {
 	// 设置gin模式
-	// 1.DebugMode
-	// 2.ReleaseMode
-	// 3.TestMode
-	gin.SetMode(gin.DebugMode)
+	gin.SetMode(config.AppMode)
 	engine := gin.New()
+	// 记录日志
+	engine.Use(gin.Logger())
 	// 设置路由
 	route.SetupRouter(engine)
 
