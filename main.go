@@ -1,6 +1,7 @@
 package main
 
 import (
+	"go-gin-api/app/config"
 	"go-gin-api/app/route"
 	"log"
 	"os"
@@ -19,16 +20,9 @@ func main() {
 	route.SetupRouter(engine)
 
 	// 启动服务
-	if err := engine.Run(":9000"); err != nil {
+	if err := engine.Run(config.AppPort); err != nil {
 		log.Println(err)
 		os.Exit(1)
 	}
-	// r := gin.Default()
-	// r.GET("/ping", func(c *gin.Context) {
-	// 	c.JSON(200, gin.H{
-	// 		"message": "pong",
-	// 	})
-	// })
-	// r.Run()
 
 }
