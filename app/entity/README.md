@@ -1,2 +1,0 @@
-# go-gin-api
-gin

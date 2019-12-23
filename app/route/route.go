@@ -1,7 +1,7 @@
 package route
 
 import (
-	"go-gin-api/app/controller/product"
+	"go-gin-api/app/api"
 	"go-gin-api/app/util"
 
 	"github.com/gin-gonic/gin"
@@ -10,28 +10,22 @@ import (
 // SetupRouter 路由
 func SetupRouter(engine *gin.Engine) {
 	// 测试路由
-	engine.GET("/ping", func(c *gin.Context) {
-		utilGin := util.Gin{Ctx: c}
-		utilGin.Response(1, "pong", nil)
-	})
+	engine.GET("/ping", api.Ping)
 	// 404
 	engine.NoRoute(func(c *gin.Context) {
 		utilGin := util.Gin{Ctx: c}
 		utilGin.Response(404, "请求方法不存在", nil)
 	})
 
-	ProductRouter := engine.Group("/product")
+	// 用户模块
+	UserRouter := engine.Group("/user")
 	{
-		// 新增产品
-		ProductRouter.POST("", product.Add)
-
-		// 更新产品
-		ProductRouter.PUT("/:id", product.Edit)
-
-		// 删除产品
-		ProductRouter.DELETE("/:id", product.Delete)
-
-		// 获取产品详情
-		ProductRouter.GET("/:id", product.Detail)
+		// 注册接口
+		UserRouter.POST("/register", api.UserRegister)
+		// 登陆接口
+		UserRouter.POST("/login", api.UserLogin)
+		//退出接口
+		UserRouter.POST("/loginOut", api.UserLogout)
+		UserRouter.POST("/getUserInfo", api.GetUserInfo)
 	}
 }
