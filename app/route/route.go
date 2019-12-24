@@ -2,6 +2,7 @@ package route
 
 import (
 	"go-gin-api/app/api"
+	"go-gin-api/app/middleware"
 	"go-gin-api/app/util"
 
 	"github.com/gin-gonic/gin"
@@ -18,14 +19,20 @@ func SetupRouter(engine *gin.Engine) {
 	})
 
 	// 用户模块
-	UserRouter := engine.Group("/user")
+	userRouter := engine.Group("/user")
 	{
 		// 注册接口
-		UserRouter.POST("/register", api.UserRegister)
+		userRouter.POST("/register", api.UserRegister)
 		// 登陆接口
-		UserRouter.POST("/login", api.UserLogin)
-		//退出接口
-		UserRouter.POST("/loginOut", api.UserLogout)
-		UserRouter.POST("/getUserInfo", api.GetUserInfo)
+		userRouter.POST("/login", api.UserLogin)
+		auth := userRouter.Group("")
+		auth.Use(middleware.AuthRequired())
+		{
+			//退出接口
+			auth.POST("/loginOut", api.UserLogout)
+			// 获取用户信息
+			auth.POST("/getUserInfo", api.GetUserInfo)
+		}
+
 	}
 }
