@@ -38,6 +38,9 @@ func (s *UserRegisterService) Register() *util.Response {
 	if err := s.valid(); err != nil {
 		return err
 	}
+
+	// 加密密码
+	
 	// 创建用户
 	if err := model.DB.Create(&user).Error; err != nil {
 		return &util.Response{
