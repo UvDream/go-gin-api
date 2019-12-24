@@ -2,6 +2,7 @@ package main
 
 import (
 	"go-gin-api/app/config"
+	"go-gin-api/app/model"
 	"go-gin-api/app/route"
 	"log"
 	"os"
@@ -19,5 +20,6 @@ func main() {
 		log.Println(err)
 		os.Exit(1)
 	}
+	defer model.DB.Close()
 
 }

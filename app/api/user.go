@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"go-gin-api/app/model"
 	"go-gin-api/app/util"
@@ -35,6 +36,10 @@ func UserLogout(c *gin.Context) {
 
 // GetUserInfo 获取用户信息
 func GetUserInfo(c *gin.Context) {
+	var user model.User
+	result := model.DB.Find(&user)
+	p, _ := json.Marshal(result)
+	fmt.Println(string(p))
 	utilGin := util.Gin{Ctx: c}
 	utilGin.Response(200, "success", "查询个人信息!")
 }

@@ -24,6 +24,7 @@ func NewRouter() *gin.Engine {
 	{
 		// 注册接口
 		userRouter.POST("/register", api.UserRegister)
+		userRouter.GET("/getUserList", api.GetUserInfo)
 		// 登陆接口
 		userRouter.POST("/login", api.UserLogin)
 		auth := userRouter.Group("")
@@ -32,7 +33,7 @@ func NewRouter() *gin.Engine {
 			//退出接口
 			auth.POST("/loginOut", api.UserLogout)
 			// 获取用户信息
-			auth.POST("/getUserInfo", api.GetUserInfo)
+			auth.GET("/getUserInfo", api.GetUserInfo)
 		}
 
 	}

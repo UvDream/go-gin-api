@@ -13,11 +13,10 @@ var DB *gorm.DB
 
 // DataBase 连接数据库
 func DataBase(dbURL string) {
-	fmt.Println(dbURL)
 	db, err := gorm.Open("mysql", dbURL)
 
 	if err != nil {
-		fmt.Println("数据库连接失败!")
+		fmt.Printf("连接数据库失败,err:%v\n", err)
 		return
 	}
 	// 设置连接池
@@ -29,8 +28,6 @@ func DataBase(dbURL string) {
 	db.DB().SetConnMaxLifetime(time.Second * 30)
 	DB = db
 	migration()
-	// 关闭数据库连接
-	defer DB.Close()
 }
 func migration() {
 	// 自动迁移模式
