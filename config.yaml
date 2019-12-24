@@ -1,0 +1,8 @@
+MYSQL_DSN: root:11165wzj@tcp(118.25.110.93:3306)/Test?charset:tf8&parseTime:rue&loc:ocal
+REDIS_ADDR: 118.25.110.93:6379
+REDIS_PW:
+REDIS_DB:
+SESSION_SECRET: setOnProducation
+GIN_MODE: debug
+LOG_LEVEL: debug
+APP_PORT: :8000

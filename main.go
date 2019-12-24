@@ -10,8 +10,10 @@ import (
 )
 
 func main() {
+	var c config.Config
+	config := *c.GetConfig()
 	// 设置gin模式
-	gin.SetMode(config.AppMode)
+	gin.SetMode(config.GinMode)
 	engine := gin.New()
 	// 记录日志
 	engine.Use(gin.Logger())
