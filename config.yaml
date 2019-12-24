@@ -1,4 +1,4 @@
-MYSQL_DSN: root:11165wzj@tcp(118.25.110.93:3306)/Test?charset:tf8&parseTime:rue&loc:ocal
+MYSQL_DSN: root:11165wzj@tcp(118.25.110.93:3306)/Test?charset=utf8&parseTime=True&loc=Local
 REDIS_ADDR: 118.25.110.93:6379
 REDIS_PW:
 REDIS_DB:

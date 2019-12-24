@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"go-gin-api/app/model"
 	"io/ioutil"
 	"path/filepath"
 
@@ -55,7 +56,8 @@ func (c *Config) GetConfig() *Config {
 
 // Init 初始化
 func (c *Config) Init() {
-	fmt.Println("初始化")
 	// 设置gin模式
 	gin.SetMode(c.GinMode)
+	// 连接数据库
+	model.DataBase(c.MysqlDNS)
 }
