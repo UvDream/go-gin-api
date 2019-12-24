@@ -23,3 +23,4 @@ func (g *Gin) Response(code int, msg string, data interface{}) {
 	})
 	return
 }
+

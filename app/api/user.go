@@ -1,9 +1,9 @@
 package api
 
 import (
-	"encoding/json"
 	"fmt"
 	"go-gin-api/app/model"
+	"go-gin-api/app/service"
 	"go-gin-api/app/util"
 
 	"github.com/gin-gonic/gin"
@@ -11,8 +11,11 @@ import (
 
 // UserRegister 用户注册
 func UserRegister(c *gin.Context) {
-	utilGin := util.Gin{Ctx: c}
-	utilGin.Response(200, "success", "注册成功!")
+	var s service.UserRegisterService
+	if c.BindJSON(&s) == nil {
+		res := s.Register()
+		c.JSON(200, res)
+	}
 }
 
 // UserLogin 用户登陆
@@ -38,7 +41,7 @@ func UserLogout(c *gin.Context) {
 func GetUserInfo(c *gin.Context) {
 	var user model.User
 	result := model.DB.Find(&user)
-	p, _ := json.Marshal(result)
+	p, _ := util.JSONEncode(result)
 	fmt.Println(string(p))
 	utilGin := util.Gin{Ctx: c}
 	utilGin.Response(200, "success", "查询个人信息!")
