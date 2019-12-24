@@ -8,18 +8,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// SetupRouter 路由
-func SetupRouter(engine *gin.Engine) {
+// NewRouter 路由
+func NewRouter() *gin.Engine {
+	r := gin.Default()
 	// 测试路由
-	engine.GET("/ping", api.Ping)
+	r.GET("/ping", api.Ping)
 	// 404
-	engine.NoRoute(func(c *gin.Context) {
+	r.NoRoute(func(c *gin.Context) {
 		utilGin := util.Gin{Ctx: c}
 		utilGin.Response(404, "请求方法不存在", nil)
 	})
 
 	// 用户模块
-	userRouter := engine.Group("/user")
+	userRouter := r.Group("/user")
 	{
 		// 注册接口
 		userRouter.POST("/register", api.UserRegister)
@@ -35,4 +36,5 @@ func SetupRouter(engine *gin.Engine) {
 		}
 
 	}
+	return r
 }

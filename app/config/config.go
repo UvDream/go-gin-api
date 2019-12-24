@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
+	"github.com/gin-gonic/gin"
+
 	"gopkg.in/yaml.v2"
 )
 
@@ -49,4 +51,11 @@ func (c *Config) GetConfig() *Config {
 	}
 
 	return c
+}
+
+// Init 初始化
+func (c *Config) Init() {
+	fmt.Println("初始化")
+	// 设置gin模式
+	gin.SetMode(c.GinMode)
 }
