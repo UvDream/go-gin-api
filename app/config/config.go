@@ -36,15 +36,15 @@ func (c *Config) GetConfig() *Config {
 		return nil
 	}
 	fmt.Println("获取到配置文件:", path)
-	yamlFile, err1 := ioutil.ReadFile(path)
-	if err1 != nil {
-		fmt.Println(err1.Error())
+	yamlFile, err := ioutil.ReadFile(path)
+	if err != nil {
+		fmt.Println(err.Error())
 		return nil
 	}
 
-	err1 = yaml.Unmarshal(yamlFile, c)
-	if err1 != nil {
-		fmt.Println(err1.Error())
+	err = yaml.Unmarshal(yamlFile, c)
+	if err != nil {
+		fmt.Println(err.Error())
 		return nil
 	}
 
