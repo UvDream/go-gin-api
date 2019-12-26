@@ -20,10 +20,11 @@ func UserRegister(c *gin.Context) {
 
 // UserLogin 用户登陆
 func UserLogin(c *gin.Context) {
-	var loginReq model.LoginReq
+	var l service.UserLoginService
 	// 获取参数
-	if c.BindJSON(&loginReq) == nil {
-		fmt.Println(loginReq)
+	if c.BindJSON(&l) == nil {
+		res := l.Login(c)
+		c.JSON(200, res)
 	} else {
 		utilGin := util.Gin{Ctx: c}
 		utilGin.Response(200, "success", "登陆失败!")

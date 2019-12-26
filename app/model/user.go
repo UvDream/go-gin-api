@@ -33,12 +33,6 @@ const (
 	PassWordLevel = 12
 )
 
-// LoginReq 登陆类
-type LoginReq struct {
-	Phone string `json:"phone"`
-	Pwd   string `json:"password"`
-}
-
 // SetPassword 加密密码
 func (u *User) SetPassword(password string) error {
 	fmt.Println(password)
@@ -47,5 +41,14 @@ func (u *User) SetPassword(password string) error {
 		return err
 	}
 	u.PWD = string(bytes)
+	return nil
+}
+
+// CheckPassword 验证密码
+func (u *User) CheckPassword(password string) error {
+	err := bcrypt.CompareHashAndPassword([]byte(u.PWD), []byte(password))
+	if err != nil {
+		return err
+	}
 	return nil
 }
