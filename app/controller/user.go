@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"go-gin-api/app/middleware"
 	"go-gin-api/app/model"
 	"go-gin-api/app/service"
 	"go-gin-api/app/util"
@@ -34,8 +35,12 @@ func UserLogin(c *gin.Context) {
 
 // UserLogout 用户退出
 func UserLogout(c *gin.Context) {
-	utilGin := util.Gin{Ctx: c}
-	utilGin.Response(200, "success", "退出成功!")
+	err := c.MustGet("msg").(*middleware.MoreMessage)
+	if err != nil {
+		utilGin := util.Gin{Ctx: c}
+		utilGin.Response(200, "success", "Token有效!")
+	}
+
 }
 
 // GetUserInfo 获取用户信息
