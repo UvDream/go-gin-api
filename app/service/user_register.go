@@ -40,7 +40,12 @@ func (s *UserRegisterService) Register() *util.Response {
 	}
 
 	// 加密密码
-	
+	if err := user.SetPassword(s.Password); err != nil {
+		return &util.Response{
+			Code:    40000,
+			Message: "加密密码失败!",
+		}
+	}
 	// 创建用户
 	if err := model.DB.Create(&user).Error; err != nil {
 		return &util.Response{

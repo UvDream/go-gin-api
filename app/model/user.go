@@ -1,7 +1,10 @@
 package model
 
 import (
+	"fmt"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/jinzhu/gorm"
 )
@@ -26,10 +29,23 @@ const (
 	Active string = "active"
 	// InActive 未激活用户
 	InActive string = "inactive"
+	// PassWordLevel 加密等级
+	PassWordLevel = 12
 )
 
 // LoginReq 登陆类
 type LoginReq struct {
 	Phone string `json:"phone"`
 	Pwd   string `json:"password"`
+}
+
+// SetPassword 加密密码
+func (u *User) SetPassword(password string) error {
+	fmt.Println(password)
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), PassWordLevel)
+	if err != nil {
+		return err
+	}
+	u.PWD = string(bytes)
+	return nil
 }
