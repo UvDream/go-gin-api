@@ -36,6 +36,12 @@ func UserLogin(c *gin.Context) {
 // UserLogout 用户退出
 func UserLogout(c *gin.Context) {
 	err := c.MustGet("msg").(*middleware.MoreMessage)
+	// 获取用户信息
+	a, _ := c.Get("msg")
+	value, ok := a.(*middleware.MoreMessage)
+	if ok {
+		fmt.Println("打印", value.Phone)
+	}
 	if err != nil {
 		utilGin := util.Gin{Ctx: c}
 		utilGin.Response(200, "success", "Token有效!")

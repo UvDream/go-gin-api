@@ -26,11 +26,16 @@ type MoreMessage struct {
 }
 
 var (
-	TokenExpired     error  = errors.New("Token is expired")
-	TokenNotValidYet error  = errors.New("Token not active yet")
-	TokenMalformed   error  = errors.New("That's not even a token")
-	TokenInvalid     error  = errors.New("Couldn't handle this token:")
-	Signkey          string = "UvDream"
+	// ErrTokenExpired 过期
+	ErrTokenExpired = errors.New("Token已经过期")
+	// ErrTokenNotValidYet 尚未激活
+	ErrTokenNotValidYet = errors.New("Token not active yet")
+	// ErrTokenMalformed 不是token
+	ErrTokenMalformed = errors.New("That's not even a token")
+	// ErrTokenInvalid 无法处理
+	ErrTokenInvalid = errors.New("Couldn't handle this token")
+	// Signkey 令牌key
+	Signkey = "UvDream"
 )
 
 // AuthRequired 验证是否登陆以及是否过期
@@ -48,7 +53,7 @@ func AuthRequired() gin.HandlerFunc {
 		j := NewJwt()
 		msg, err := j.ParseToken(token)
 		if err != nil {
-			if err == TokenExpired {
+			if err == ErrTokenExpired {
 				utilGin.Response(40001, "fail", "授权过期")
 				c.Abort()
 				return
@@ -57,6 +62,7 @@ func AuthRequired() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+		// msg 中含有用户信息
 		c.Set("msg", msg)
 
 	}
@@ -109,18 +115,18 @@ func (j *Jwt) ParseToken(tokenString string) (*MoreMessage, error) {
 	if err != nil {
 		if ve, ok := err.(*jwt.ValidationError); ok {
 			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-				return nil, TokenMalformed
+				return nil, ErrTokenMalformed
 			} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
-				return nil, TokenExpired
+				return nil, ErrTokenExpired
 			} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
-				return nil, TokenNotValidYet
+				return nil, ErrTokenNotValidYet
 			} else {
-				return nil, TokenInvalid
+				return nil, ErrTokenInvalid
 			}
 		}
 	}
-	if claims, ok := token.Claims.(*MoreMessage); ok && token.Valid {
-		return claims, nil
+	if msg, ok := token.Claims.(*MoreMessage); ok && token.Valid {
+		return msg, nil
 	}
-	return nil, TokenInvalid
+	return nil, ErrTokenInvalid
 }
